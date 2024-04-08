@@ -1,0 +1,91 @@
+// @import "tailwindcss/base";
+// @import "tailwindcss/components";
+// @import "tailwindcss/utilities";
+
+// .btn {
+//   @apply text-foreground-900 dark:text-dark-foreground-900
+//   bg-gray-100
+//   focus:ring-4
+
+//   font-medium
+//   rounded-lg
+//   text-sm
+//   px-5
+//   py-2.5
+//   mr-2
+//   mb-2
+//   dark:bg-gray-600
+//   dark:hover:bg-gray-700
+//   dark:focus:ring-gray-800
+//   transition-all ease-out duration-300;
+//   &.round {
+//     @apply rounded-full;
+//   }
+// }
+
+// .btn-txt {
+//   @apply text-foreground-900 dark:text-dark-foreground-900
+//   hover:bg-gray-200
+//   font-bold
+//   rounded-lg
+//   text-sm
+//   px-1
+//   py-1
+//  transition-all ease-out duration-300;
+// }
+
+// .btn-alt {
+//   @apply border border-gray-200 hover:bg-gray-100 focus:z-10 ring-0 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700;
+// }
+
+// .btn-outline {
+//   @apply font-medium rounded-full text-sm px-5 py-1 text-center  transition-all ease-out duration-300;
+// }
+// @each $colorName, $matColor in $colors {
+//   $color500: map-get($matColor, 500);
+//   $color600: map-get($matColor, 600);
+//   $color300: map-get($matColor, 300);
+//   $color800: map-get($matColor, 800);
+//   $foreground500: map-get(map-get($matColor, contrast), 500);
+
+//   .btn.#{"" + $colorName + ""} {
+//     background-color: $color500 !important;
+//     color: $foreground500 !important;
+//     &:hover {
+//       background-color: $color800 !important;
+//     }
+//     &:focus {
+//       outline: 1px solid $color300 !important;
+//     }
+//     &.alt-#{"" + $colorName + ""} {
+//       color: $color500;
+//       &:hover {
+//         color: $color800 !important;
+//       }
+//     }
+//   }
+
+//   .btn-outline.#{"" + $colorName + ""} {
+//     color: $color500;
+
+//     border: 1px solid $color500;
+//     &:focus {
+//       outline: 1px solid $color300 !important;
+//     }
+//     &:hover {
+//       background-color: $color500;
+//       color: $foreground500;
+//     }
+//   }
+
+//   .btn-txt.#{"" + $colorName + ""} {
+//     background-color: transparent !important;
+//     color: $color500 !important;
+//   }
+
+//   .dark {
+//     .btn {
+//       background-color: $color600;
+//     }
+//   }
+// }

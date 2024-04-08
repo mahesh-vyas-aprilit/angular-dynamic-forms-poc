@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { STEP_ITEMS } from './constants/multi-step-form';
+import { AppService } from './app.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { FormField, FormFieldJSON } from './types/form-field';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +9,40 @@ import { STEP_ITEMS } from './constants/multi-step-form';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  formData: any;
-  formContent: any;
-  activeStepIndex!: number;
+  formFields: FormFieldJSON[] = [];
+  dynamicForm = this.fb.group({});
+
+  constructor(private appService: AppService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.formContent = STEP_ITEMS;
+    this.getDynamicFormFields();
   }
-  onFormSubmit(formData: any): void {
-    this.formData = formData;
-    console.log('data => ', this.formData);
+
+  getDynamicFormFields() {
+    this.appService.getFormFields().subscribe((response: FormField) => {
+      this.formFields = response.data;
+      this.setDynamicForm(response.data);
+    });
+  }
+
+  setDynamicForm(controls: FormFieldJSON[]) {
+    for (const control of controls) {
+      const validators = [];
+      if (control.validators?.required) {
+        validators.push(Validators.required);
+      }
+      this.dynamicForm.addControl(
+        control.name,
+        this.fb.control(control.value, validators)
+      );
+    }
+  }
+
+  saveForm() {
+    console.log(this.dynamicForm.value);
+  }
+
+  trackByFn(index: number, form: { value: string; label: string }) {
+    return form.value; // or any other unique identifier
   }
 }

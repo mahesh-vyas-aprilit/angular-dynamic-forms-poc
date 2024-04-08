@@ -1,0 +1,14 @@
+@each $colorName,
+$matColor in $colors {
+  $color500: map-get($matColor, 500);
+  $color600: map-get($matColor, 600);
+  $color300: map-get($matColor, 300);
+  $color800: map-get($matColor, 800);
+  $foreground500: map-get(map-get($matColor, contrast), 500);
+
+  .mybg-#{"" + $colorName + ""} {
+    background-color: $color500 !important;
+  }
+
+
+}

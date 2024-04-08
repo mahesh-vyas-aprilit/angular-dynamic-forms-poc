@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "name": "establishmentNumber",
+      "label": "Establishment Number",
+      "value": "",
+      "type": "number",
+      "validators": {
+        "required": true
+      }
+    },
+    {
+      "name": "licenceNumber",
+      "label": "Licence Number",
+      "value": "",
+      "type": "number",
+      "validators": {
+        "required": true
+      }
+    },
+    {
+      "name": "community",
+      "label": "Community",
+      "value": "",
+      "type": "dropdown",
+      "validators": {
+        "required": true
+      },
+      "options": [
+        {
+          "label": "Label 1",
+          "value": "label1"
+        },
+        {
+          "label": "Label 2",
+          "value": "label2"
+        }
+      ]
+    },
+    {
+      "name": "dateOfRegistration",
+      "label": "Date Of Registration",
+      "value": "",
+      "type": "date",
+      "validators": {
+        "required": true
+      }
+    },
+    {
+      "name": "comment",
+      "label": "Comment",
+      "value": "",
+      "type": "textArea",
+      "validators": {
+        "required": false
+      }
+    }
+  ]
+}

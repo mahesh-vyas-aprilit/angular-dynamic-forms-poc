@@ -1,33 +1,118 @@
-<main class="main-container my-10">
-  <!-- <select [(ngModel)]="selectedFormType" (change)="onFormTypeChange()">
-    <option *ngFor="let formType of formTypes" [value]="formType.id">
-      {{ formType.name }}
-    </option>
-  </select> -->
-  <!-- <select
-    id="formType"
-    [(ngModel)]="selectedFormType"
-    (change)="onFormTypeChange($event)"
-  >
-    <option value="">--Select Form Type--</option>
-    <option *ngFor="let formType of formTypes" [value]="formType.id">
-      {{ formType.name }}
-    </option>
-  </select> -->
-  <app-multi-step-form
-    class="multi-step-form"
-    [formContent]="formContent"
-    (formSubmit)="onFormSubmit($event)"
-  ></app-multi-step-form>
-</main>
+<div styleClass="dynamic-form-card" class="main-container my-10">
+  <div class="text-center">Dynamic Form Creation</div>
+  <form [formGroup]="dynamicForm" (ngSubmit)="saveForm()" novalidate>
+    <div class="field" *ngFor="let field of formFields" [ngSwitch]="field.type">
+      <mat-form-field class="w-full" *ngSwitchCase="'textArea'">
+        <mat-label>{{ field.label }}</mat-label>
+        <textarea
+          matInput
+          formControlName="{{ field.name }}"
+          class="ring-0 focus-within:ring-0 focus:ring-0"
+        ></textarea>
+        <mat-error
+          *ngIf="
+            dynamicForm?.get(field.name)?.invalid &&
+            dynamicForm?.get(field.name)?.dirty
+          "
+        >
+          invalid</mat-error
+        >
+        <mat-error *ngIf="dynamicForm?.get(field.name)?.errors?.['required']">
+          required</mat-error
+        >
+      </mat-form-field>
 
-<!-- <p>{{ "welcomeMessage" | translate : user }}</p>
-<p>Current locale => {{ this.translate.currentLang }}</p>
-<input type="password" placeholder="{{ 'login.password' | translate }}" />
-<label translate="login.username"></label>
-<p translate [translateParams]="{ firstName: user.firstName }">
-  welcomeMessage
-</p>
+      <mat-form-field *ngSwitchCase="'date'" class="w-full">
+        <mat-label>{{ field.label }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="{{ field.name }}"
+          class="ring-0 focus-within:ring-0 focus:ring-0"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="picker">
+          <mat-icon></mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="dynamicForm?.get(field.name)?.errors?.['required']"
+          >required
+        </mat-error>
+      </mat-form-field>
 
-<button (click)="toggleLanguage()">Toggle Language</button>
-<h1 class="text-3xl font-bold underline">Hello world!</h1> -->
+      <mat-form-field class="w-full" *ngSwitchCase="'text'">
+        <mat-label>{{ field.label }}</mat-label>
+        <input
+          matInput
+          formControlName="{{ field.name }}"
+          type="text"
+          class="ring-0 focus-within:ring-0 focus:ring-0"
+        />
+        <mat-error
+          *ngIf="
+            dynamicForm?.get(field.name)?.invalid &&
+            dynamicForm?.get(field.name)?.dirty
+          "
+        >
+          invalid</mat-error
+        >
+        <mat-error *ngIf="dynamicForm?.get(field.name)?.errors?.['required']">
+          required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="w-full" *ngSwitchCase="'number'">
+        <mat-label>{{ field.label }}</mat-label>
+        <input
+          type="number"
+          *ngSwitchCase="'number'"
+          matInput
+          formControlName="{{ field.name }}"
+          class="ring-0 focus-within:ring-0 focus:ring-0"
+        />
+        <mat-error
+          *ngIf="
+            dynamicForm?.get(field.name)?.invalid &&
+            dynamicForm?.get(field.name)?.dirty
+          "
+        >
+          invalid</mat-error
+        >
+        <mat-error *ngIf="dynamicForm?.get(field.name)?.errors?.['required']">
+          required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field class="w-full" *ngSwitchCase="'dropdown'">
+        <mat-label>{{ field.label }}</mat-label>
+        <mat-select formControlName="{{ field.name }}">
+          <mat-option
+            *ngFor="let place of field.options; trackBy: trackByFn"
+            [value]="place.value"
+          >
+            {{ place.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            dynamicForm?.get(field.name)?.invalid &&
+            dynamicForm?.get(field.name)?.dirty
+          "
+        >
+          invalid</mat-error
+        >
+        <mat-error *ngIf="dynamicForm?.get(field.name)?.errors?.['required']">
+          required</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <button
+      mat-button
+      [disabled]="dynamicForm.invalid"
+      class="btn-primary"
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</div>
