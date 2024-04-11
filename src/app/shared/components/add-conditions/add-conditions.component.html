@@ -1,0 +1,23 @@
+<form [formGroup]="form" class="w-full">
+  <app-add-condition
+    controlKey="condition"
+    label="Condition"
+    [formFields]="formFields"
+  ></app-add-condition>
+  <app-do-task
+    controlKey="result"
+    label="Result"
+    [formFields]="formFields"
+  ></app-do-task>
+  <button
+    (click)="handleSubmit()"
+    class="w-fit bg-blue-500 text-white py-1 px-2 rounded disabled:bg-blue-300"
+    [disabled]="!this.form.valid"
+  >
+    Submit
+  </button>
+</form>
+
+<app-condition-card></app-condition-card>
+
+<!-- <pre>{{ form.value | json }}</pre> -->

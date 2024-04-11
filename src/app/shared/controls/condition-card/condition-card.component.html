@@ -1,0 +1,41 @@
+<div class="flex flex-col gap-5 mt-5">
+  <div class="flex flex-col gap-5" *ngFor="let data of formFields">
+    <div
+      *ngFor="let condition of data?.conditions"
+      class="border pt-3 pr-14 pb-2.5 pl-9 flex items-center justify-between"
+    >
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-blue-500">IF</span>
+          <span *ngIf="condition?.if">{{
+            getLabelById(condition?.if!, formFields)
+          }}</span>
+          <span *ngIf="condition?.state" class="text-blue-500">{{
+            condition?.state
+          }}</span>
+          <span *ngIf="condition?.targetField">{{
+            getLabelById(condition?.targetField!, formFields)
+          }}</span>
+          <span *ngIf="condition?.targetValue">{{
+            condition?.targetValue
+          }}</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span *ngIf="condition?.do" class="text-blue-500">{{
+            condition?.do
+          }}</span>
+          <span *ngIf="condition?.field">
+            {{ getLabelById(condition?.field!, formFields) }}
+          </span>
+        </div>
+      </div>
+      <button
+        (click)="handleDeleteCondition(condition?.id!, data?.id!)"
+        class="bg-rose-500 p-2 rounded text-white"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>

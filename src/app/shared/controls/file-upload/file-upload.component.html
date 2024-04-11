@@ -1,0 +1,9 @@
+<div class="file-upload-component {{ className }}">
+  <span class="placeholder-input">{{
+    file ? file.name : "Choose file or drag and drop file here"
+  }}</span>
+  <input class="file-input" type="file" (change)="emitFiles($event)" />
+  <div *ngIf="imageUrl">
+    <img [src]="imageUrl" alt="Preview" class="preview-image" />
+  </div>
+</div>

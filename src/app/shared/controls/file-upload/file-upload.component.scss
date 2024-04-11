@@ -1,0 +1,15 @@
+.file-upload-component {
+  @apply relative border border-[#D1D5DB] rounded-lg h-28 flex items-center justify-center cursor-pointer transition-colors hover:border-gray-400 overflow-hidden w-full;
+
+  .placeholder-input {
+    @apply block text-sm;
+  }
+
+  .file-input {
+    @apply absolute inset-0 opacity-0 z-[5] cursor-pointer;
+  }
+
+  .preview-image {
+    @apply object-cover absolute inset-0 h-full w-full cursor-pointer;
+  }
+}

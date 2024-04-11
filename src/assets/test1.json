@@ -1,0 +1,38 @@
+[
+  {
+    "id": "test",
+    "fieldType": "number",
+    "fieldLabel": "test",
+    "fieldPlaceholder": "test",
+    "fieldValue": "test",
+    "conditions": [
+      {
+        "id": "",
+        "operator": "and / any",
+        "ifs": [
+          {
+            "id": "",
+            "state": "equals",
+            "target": "value/another field (enum)/ null",
+            "targetValue": "test or null",
+            "targetField": "another field id or null"
+          },
+          {
+            "id": "",
+            "state": "equals",
+            "target": "value/another field (enum)",
+            "targetValue": "test or null",
+            "targetField": "another field id or null"
+          }
+        ],
+        "does": [
+          {
+            "id": "",
+            "do": "hide /show",
+            "fields": ["email filed id"]
+          }
+        ]
+      }
+    ]
+  }
+]

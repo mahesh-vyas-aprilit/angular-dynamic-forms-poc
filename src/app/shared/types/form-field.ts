@@ -3,12 +3,26 @@ export interface FormField {
 }
 
 export interface FormFieldJSON {
+  id: string;
   name: string;
   label: string;
   value: string;
   type: string;
+  isHidden: boolean;
   validators: ValidatorJSON;
   options: OptionJSON[];
+  conditions: ConditionJSON[];
+}
+
+interface ConditionJSON {
+  id: string;
+  if: string;
+  state: string;
+  target: string | null;
+  targetValue: string | null;
+  targetField: string | null;
+  do: string;
+  field: string;
 }
 
 interface ValidatorJSON {
@@ -19,7 +33,7 @@ interface ValidatorJSON {
   pattern?: string;
 }
 
-interface OptionJSON {
+export interface OptionJSON {
   label: string;
   value: string;
 }

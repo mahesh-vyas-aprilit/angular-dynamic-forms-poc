@@ -1,5 +1,5 @@
 <div styleClass="dynamic-form-card" class="main-container my-10">
-  <div class="text-center">Dynamic Form Creation</div>
+  <div class="text-center mb-5">Dynamic Form Creation</div>
   <form [formGroup]="dynamicForm" (ngSubmit)="saveForm()" novalidate>
     <div class="field" *ngFor="let field of formFields" [ngSwitch]="field.type">
       <mat-form-field class="w-full" *ngSwitchCase="'textArea'">
@@ -104,6 +104,17 @@
           required</mat-error
         >
       </mat-form-field>
+
+      <app-file-upload
+        *ngSwitchCase="'file'"
+        formControlName="{{ field.name }}"
+      ></app-file-upload>
+
+      <app-leave-request
+        *ngSwitchCase="'leaveRequest'"
+        [title]="field.name"
+        [required]="true"
+      ></app-leave-request>
     </div>
 
     <button
@@ -115,4 +126,8 @@
       Submit
     </button>
   </form>
+
+  <app-add-conditions></app-add-conditions>
 </div>
+
+<pre>{{ dynamicForm.value | json }}</pre>

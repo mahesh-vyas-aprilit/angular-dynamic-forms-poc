@@ -6,11 +6,9 @@
       "label": "Establishment Number",
       "value": "",
       "type": "number",
-      "isHidden": false,
       "validators": {
         "required": true
-      },
-      "conditions": []
+      }
     },
     {
       "id": "field-2",
@@ -18,11 +16,9 @@
       "label": "Licence Number",
       "value": "",
       "type": "number",
-      "isHidden": false,
       "validators": {
         "required": true
-      },
-      "conditions": []
+      }
     },
     {
       "id": "field-3",
@@ -30,7 +26,6 @@
       "label": "Community",
       "value": "",
       "type": "dropdown",
-      "isHidden": false,
       "validators": {
         "required": true
       },
@@ -43,8 +38,7 @@
           "label": "Label 2",
           "value": "label2"
         }
-      ],
-      "conditions": []
+      ]
     },
     {
       "id": "field-4",
@@ -52,11 +46,9 @@
       "label": "Date Of Registration",
       "value": "",
       "type": "date",
-      "isHidden": false,
       "validators": {
         "required": true
-      },
-      "conditions": []
+      }
     },
     {
       "id": "field-5",
@@ -64,11 +56,21 @@
       "label": "Comment",
       "value": "",
       "type": "textArea",
-      "isHidden": false,
       "validators": {
         "required": false
-      },
-      "conditions": []
+      }
+    },
+    {
+      "id": "field-6",
+      "name": "leaveRequest",
+      "label": "Leave Request",
+      "value": "",
+      "type": "leaveRequest",
+      "validators": {
+        "required": true,
+        "min": 1,
+        "max": 10
+      }
     }
   ]
 }

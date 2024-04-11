@@ -1,0 +1,38 @@
+<fieldset
+  [formGroupName]="controlKey"
+  class="border pt-5 px-5 rounded-2xl my-5 flex flex-col gap-y-3"
+>
+  <legend class="text-xl font-semibold">{{ label }}</legend>
+  <mat-form-field class="w-full">
+    <mat-label>Do</mat-label>
+    <mat-select formControlName="do" (valueChange)="handleDoFieldChange()">
+      <mat-option *ngFor="let data of doConditions" [value]="data.value">
+        {{ data.label }}
+      </mat-option>
+    </mat-select>
+    <!-- <mat-error *ngIf="form.controls.do?.invalid && form.controls.do.dirty">
+      invalid</mat-error
+    >
+    <mat-error *ngIf="form.controls.do?.hasError('required')">
+      required</mat-error
+    > -->
+  </mat-form-field>
+
+  <mat-form-field class="w-full" *ngIf="doValue">
+    <mat-label>Field</mat-label>
+    <mat-select formControlName="field">
+      <mat-option
+        *ngFor="let data of formFields; trackBy: trackByFn"
+        [value]="data.id"
+      >
+        {{ data.label }}
+      </mat-option>
+    </mat-select>
+    <!-- <mat-error *ngIf="form.controls.field.invalid && form.controls.field.dirty">
+      invalid</mat-error
+    >
+    <mat-error *ngIf="form.controls.field?.hasError('required')">
+      required</mat-error
+    > -->
+  </mat-form-field>
+</fieldset>

@@ -1,0 +1,123 @@
+<fieldset
+  [formGroupName]="controlKey"
+  class="border pt-5 px-5 rounded-2xl my-5 flex flex-col gap-y-3"
+>
+  <legend class="text-xl font-semibold">{{ label }}</legend>
+  <mat-form-field class="w-full">
+    <mat-label>If</mat-label>
+    <mat-select formControlName="if" (valueChange)="handleIfFieldChange()">
+      <mat-option
+        *ngFor="let data of formFields; trackBy: trackByFn"
+        [value]="data.id"
+      >
+        {{ data.label }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="ifInvalid"> invalid</mat-error>
+    <mat-error
+      *ngIf="parentFormGroup.get(controlKey + '.if')?.hasError('required')"
+    >
+      required</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field class="w-full" *ngIf="ifValue">
+    <mat-label>State</mat-label>
+    <mat-select
+      formControlName="state"
+      (valueChange)="handleStateFieldChange()"
+    >
+      <ng-container *ngIf="getStateValue(ifValue, 'number')">
+        <mat-option *ngFor="let data of numberConditions" [value]="data.value">
+          {{ data.label }}
+        </mat-option>
+      </ng-container>
+      <ng-container *ngIf="getStateValue(ifValue, 'string')">
+        <mat-option *ngFor="let data of stringConditions" [value]="data.value">
+          {{ data.label }}
+        </mat-option>
+      </ng-container>
+      <ng-container *ngIf="getStateValue(ifValue, 'date')">
+        <mat-option *ngFor="let data of dateConditions" [value]="data.value">
+          {{ data.label }}
+        </mat-option>
+      </ng-container>
+      <ng-container *ngIf="getStateValue(ifValue, 'common')">
+        <mat-option *ngFor="let data of commonConditions" [value]="data.value">
+          {{ data.label }}
+        </mat-option>
+      </ng-container>
+    </mat-select>
+    <!-- <mat-error *ngIf="form.controls.if?.invalid && form.controls.if.dirty">
+      invalid</mat-error
+    >
+    <mat-error *ngIf="form.controls.if?.hasError('required')">
+      required</mat-error
+    > -->
+  </mat-form-field>
+
+  <ng-container
+    *ngIf="stateValue && stateValue !== 'isEmpty' && stateValue !== 'isFilled'"
+  >
+    <mat-form-field class="w-full">
+      <mat-label>Target</mat-label>
+      <mat-select
+        formControlName="target"
+        (valueChange)="handleTargetFieldChange()"
+      >
+        <mat-option *ngFor="let data of targetValues" [value]="data.value">
+          {{ data.label }}
+        </mat-option>
+      </mat-select>
+      <!-- <mat-error
+        *ngIf="form.controls.target?.invalid && form.controls.target.dirty"
+      >
+        invalid</mat-error
+      >
+      <mat-error *ngIf="form.controls.target?.hasError('required')">
+        required</mat-error
+      > -->
+    </mat-form-field>
+    <mat-form-field class="w-full" *ngIf="targetValue === 'anotherField'">
+      <mat-label>Field</mat-label>
+      <mat-select formControlName="targetField">
+        <mat-option
+          *ngFor="let data of formFields; trackBy: trackByFn"
+          [value]="data.id"
+        >
+          {{ data.label }}
+        </mat-option>
+      </mat-select>
+      <!-- <mat-error
+        *ngIf="
+          form.controls.targetField.invalid && form.controls.targetField.dirty
+        "
+      >
+        invalid</mat-error
+      >
+      <mat-error *ngIf="form.controls.targetField?.hasError('required')">
+        required</mat-error
+      > -->
+    </mat-form-field>
+
+    <mat-form-field class="w-full" *ngIf="targetValue === 'value'">
+      <mat-label>Value</mat-label>
+      <input
+        matInput
+        formControlName="targetValue"
+        type="text"
+        class="ring-0 focus-within:ring-0 focus:ring-0"
+      />
+      <!-- <mat-error
+        *ngIf="
+          form.controls.targetValue.invalid && form.controls.targetValue.dirty
+        "
+      >
+        invalid</mat-error
+      >
+      <mat-error *ngIf="form.controls.targetValue?.hasError('required')">
+        required</mat-error
+      > -->
+    </mat-form-field>
+  </ng-container>
+</fieldset>

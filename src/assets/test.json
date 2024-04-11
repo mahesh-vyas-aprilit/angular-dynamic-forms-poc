@@ -1,0 +1,20 @@
+[
+  {
+    "id": "test",
+    "name": "test",
+    "label": "test",
+    "value": "",
+    "type": "number",
+    "isHidden": false,
+    "conditions": [
+      {
+        "state": "equals",
+        "target": "value/another field (enum)",
+        "targetValue": "test or null",
+        "targetField": "another field id or null",
+        "do": "hide /show",
+        "field": "field id"
+      }
+    ]
+  }
+]
