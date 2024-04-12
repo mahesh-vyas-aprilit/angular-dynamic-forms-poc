@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppService } from 'src/app/shared/services/app.service';
 import { FormFieldJSON } from 'src/app/shared/types/form-field';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-condition-card',
   templateUrl: './condition-card.component.html',
   styleUrls: ['./condition-card.component.scss'],
 })
-export class ConditionCardComponent {
+export class ConditionCardComponent implements OnInit, OnDestroy {
   formFields: FormFieldJSON[] = [];
+
+  subsink = new SubSink();
 
   constructor(private appService: AppService) {}
 
@@ -25,9 +28,11 @@ export class ConditionCardComponent {
   }
 
   getDynamicFormFields() {
-    this.appService.getFormFields().subscribe((response: any) => {
-      this.formFields = response.data;
-    });
+    this.subsink.sink = this.appService
+      .getFormFields()
+      .subscribe((response: any) => {
+        this.formFields = response.data;
+      });
   }
 
   handleDeleteCondition(conditionId: string, fieldId: string) {
@@ -38,5 +43,9 @@ export class ConditionCardComponent {
 
         this.getDynamicFormFields();
       });
+  }
+
+  ngOnDestroy(): void {
+    this.subsink.unsubscribe();
   }
 }

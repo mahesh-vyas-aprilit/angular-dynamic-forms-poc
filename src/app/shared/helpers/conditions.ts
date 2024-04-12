@@ -174,7 +174,11 @@ export function applyNumberConditions(
 ) {
   switch (condition) {
     case 'isEquals':
-      return val1 === val2;
+      if (val1 === 0 && val2 === 0) {
+        return false;
+      } else {
+        return val1 === val2;
+      }
     case 'isNotEquals':
       return val1 !== val2;
     case 'isEmpty':

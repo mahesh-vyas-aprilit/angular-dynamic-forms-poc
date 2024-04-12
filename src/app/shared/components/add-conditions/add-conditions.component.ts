@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AppService } from 'src/app/shared/services/app.service';
 import { FormFieldJSON } from 'src/app/shared/types/form-field';
+import { SubSink } from 'subsink';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -9,10 +10,10 @@ import { v4 as uuidv4 } from 'uuid';
   templateUrl: './add-conditions.component.html',
   styleUrls: ['./add-conditions.component.scss'],
 })
-export class AddConditionsComponent implements OnInit {
+export class AddConditionsComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   formFields: FormFieldJSON[] = [];
-
+  subsink = new SubSink();
   submitted = false;
 
   constructor(private appService: AppService) {}
@@ -40,18 +41,21 @@ export class AddConditionsComponent implements OnInit {
         if (field.id === updatedData.if) {
           field.conditions.push(updatedData);
         }
-        this.appService
-          .putFormFields(this.formFields)
-          .subscribe((response: any) => {
-            console.log(response);
-          });
       });
-      console.log(this.formFields);
+      this.subsink.sink = this.appService
+        .putFormFields(this.formFields)
+        .subscribe((response: any) => {
+          console.log(response);
+        });
       this.form.reset();
       this.form.markAsUntouched();
       this.form.markAsPristine();
     } else {
       console.log('form is not valid');
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subsink.unsubscribe();
   }
 }
