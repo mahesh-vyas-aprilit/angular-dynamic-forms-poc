@@ -14,11 +14,11 @@ export interface FormFieldJSON {
   conditions: ConditionJSON[];
 }
 
-interface ConditionJSON {
+export interface ConditionJSON {
   id: string;
   if: string;
   state: string;
-  target: string | null;
+  target: string;
   targetValue: string | null;
   targetField: string | null;
   do: string;

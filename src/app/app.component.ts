@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppService } from './shared/services/app.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { FormField, FormFieldJSON } from './shared/types/form-field';
+import {
+  ConditionJSON,
+  FormField,
+  FormFieldJSON,
+} from './shared/types/form-field';
 import { SubSink } from 'subsink';
 import {
   applyCommonConditions,
@@ -18,9 +22,9 @@ import {
 export class AppComponent implements OnInit, OnDestroy {
   formFields: FormFieldJSON[] = [];
   dynamicForm = this.fb.group({});
-  formValue: any = {};
-  hiddenFields: any = {};
-  fieldConditionsMap: any = {};
+  formValue: { [key: string]: number | string } = {};
+  hiddenFields: { [key: string]: boolean } = {};
+  fieldConditionsMap: { [key: string]: ConditionJSON[] } = {};
   subs = new SubSink();
 
   constructor(private appService: AppService, private fb: FormBuilder) {}
@@ -34,16 +38,29 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   getDynamicFormFields() {
-    this.appService.getFormFields().subscribe((response: FormField) => {
-      this.formFields = response.data;
-      this.setDynamicForm(response.data);
-    });
+    // this.appService.getFormFields().subscribe((response: FormField) => {
+    //   this.formFields = response.data;
+    //   this.setDynamicForm(response.data);
+    // });
+    this.subs.add(
+      this.appService.getFormFields().subscribe(
+        (response: FormField) => {
+          this.formFields = response.data;
+          this.setDynamicForm(response.data);
+        },
+        (error) => {
+          // Handle error here, e.g., display an error message to the user
+          console.error('Error fetching form fields:', error);
+        }
+      )
+    );
   }
 
   setDynamicForm(controls: FormFieldJSON[]) {
     this.formFields.forEach((it) => {
       this.fieldConditionsMap[it.id] = [];
       this.hiddenFields[it.id] = false;
+      this.formValue[it.id] = it.value;
     });
 
     // pushing the related conditions from the formFields to the fieldConditionsMap
@@ -93,7 +110,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (target === 'value') {
           targetFieldValue = targetValue;
         } else if (target === 'anotherField') {
-          targetFieldValue = this.formValue[targetFieldId];
+          targetFieldValue = targetFieldId && this.formValue[targetFieldId];
         }
 
         console.log(
@@ -131,20 +148,28 @@ export class AppComponent implements OnInit, OnDestroy {
             );
         }
 
-        // Apply the action based on the condition
-        if (conditionMet) {
-          if (action === 'hide') {
-            this.hiddenFields[fieldToAffectId] = true;
-            console.log('hide');
-          } else if (action === 'show') {
-            this.hiddenFields[fieldToAffectId] = false;
-            console.log('show');
-          }
-        } else {
-          this.hiddenFields[fieldToAffectId] = false;
-          console.log('condition did not met!');
-        }
+        this.handleConditionResult(conditionMet, action, fieldToAffectId);
       }
+    }
+  }
+
+  // Apply the action based on the condition
+  handleConditionResult(
+    conditionMet: boolean,
+    action: string,
+    fieldToAffectId: string
+  ) {
+    if (conditionMet) {
+      if (action === 'hide') {
+        this.hiddenFields[fieldToAffectId] = true;
+        console.log('hide');
+      } else if (action === 'show') {
+        this.hiddenFields[fieldToAffectId] = false;
+        console.log('show');
+      }
+    } else {
+      this.hiddenFields[fieldToAffectId] = false;
+      console.log('condition did not met!');
     }
   }
 
