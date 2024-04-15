@@ -201,7 +201,11 @@ export function applyStringConditions(
 ) {
   switch (condition) {
     case 'isEquals':
-      return val1 === val2;
+      if (val1 === '' && val2 === '') {
+        return false;
+      } else {
+        return val1 === val2;
+      }
     case 'isNotEquals':
       return val1 !== val2;
     case 'containes':
